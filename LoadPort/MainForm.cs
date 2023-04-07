@@ -34,7 +34,7 @@ namespace LoadPort
             {
                 Writing.WriteLine("oSTG1.INIT" + "\r");
             }
-            else if(Command == "ORGN")
+            else if (Command == "ORGN")
             {
                 Writing.WriteLine("oSTG1.ORGN" + "\r");
             }
@@ -58,7 +58,7 @@ namespace LoadPort
         }
         private void btn_Command_Click(object sender, EventArgs e)
         {
-            if(tcpconnect)
+            if (tcpconnect)
             {
                 Button command_button = (Button)sender;
                 string command = command_button.Text;
@@ -102,11 +102,14 @@ namespace LoadPort
 
             while (tcpconnect)
             {
-                string ReceiveData = Reading.ReadLine();
-                this.Invoke(new Action(delegate ()
+                if (Reading.ReadLine() != null)
                 {
-                    listBox1.Items.Add(ReceiveData);
-                }));
+                    string ReceiveData = Reading.ReadLine();
+                    this.Invoke(new Action(delegate ()
+                    {
+                        listBox1.Items.Add(ReceiveData);
+                    }));
+                }
 
                 //string[] lines = ReceiveData.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                 // foreach (string strmsg in lines)
