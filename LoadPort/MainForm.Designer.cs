@@ -29,27 +29,35 @@ namespace LoadPort
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.LoadPort_Box = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.lb_wafer_16 = new System.Windows.Forms.Label();
+            this.lb_wafer_17 = new System.Windows.Forms.Label();
+            this.lb_wafer_18 = new System.Windows.Forms.Label();
+            this.lb_wafer_19 = new System.Windows.Forms.Label();
+            this.lb_wafer_20 = new System.Windows.Forms.Label();
+            this.lb_wafer_21 = new System.Windows.Forms.Label();
+            this.lb_wafer_22 = new System.Windows.Forms.Label();
+            this.lb_wafer_23 = new System.Windows.Forms.Label();
+            this.lb_wafer_24 = new System.Windows.Forms.Label();
+            this.lb_wafer_25 = new System.Windows.Forms.Label();
+            this.lb_wafer_11 = new System.Windows.Forms.Label();
+            this.lb_wafer_12 = new System.Windows.Forms.Label();
+            this.lb_wafer_13 = new System.Windows.Forms.Label();
+            this.lb_wafer_14 = new System.Windows.Forms.Label();
+            this.lb_wafer_15 = new System.Windows.Forms.Label();
+            this.lb_wafer_6 = new System.Windows.Forms.Label();
+            this.lb_wafer_7 = new System.Windows.Forms.Label();
+            this.lb_wafer_8 = new System.Windows.Forms.Label();
+            this.lb_wafer_9 = new System.Windows.Forms.Label();
+            this.lb_wafer_10 = new System.Windows.Forms.Label();
             this.lb_wafer_1 = new System.Windows.Forms.Label();
             this.lb_wafer_2 = new System.Windows.Forms.Label();
             this.lb_wafer_3 = new System.Windows.Forms.Label();
@@ -58,7 +66,7 @@ namespace LoadPort
             this.label_errorcode = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label_door = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.label_docking = new System.Windows.Forms.Label();
             this.label_clamp = new System.Windows.Forms.Label();
             this.label_foup = new System.Windows.Forms.Label();
             this.label_moving = new System.Windows.Forms.Label();
@@ -75,31 +83,39 @@ namespace LoadPort
             this.button2 = new System.Windows.Forms.Button();
             this.btn_init = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.LoadPort_Box.SuspendLayout();
             this.SuspendLayout();
             // 
             // LoadPort_Box
             // 
             this.LoadPort_Box.Controls.Add(this.label3);
-            this.LoadPort_Box.Controls.Add(this.label4);
-            this.LoadPort_Box.Controls.Add(this.label5);
-            this.LoadPort_Box.Controls.Add(this.label6);
-            this.LoadPort_Box.Controls.Add(this.label23);
-            this.LoadPort_Box.Controls.Add(this.label28);
             this.LoadPort_Box.Controls.Add(this.label29);
-            this.LoadPort_Box.Controls.Add(this.label30);
+            this.LoadPort_Box.Controls.Add(this.label28);
             this.LoadPort_Box.Controls.Add(this.label31);
-            this.LoadPort_Box.Controls.Add(this.label32);
-            this.LoadPort_Box.Controls.Add(this.label18);
-            this.LoadPort_Box.Controls.Add(this.label19);
-            this.LoadPort_Box.Controls.Add(this.label20);
-            this.LoadPort_Box.Controls.Add(this.label21);
-            this.LoadPort_Box.Controls.Add(this.label22);
-            this.LoadPort_Box.Controls.Add(this.label13);
-            this.LoadPort_Box.Controls.Add(this.label14);
-            this.LoadPort_Box.Controls.Add(this.label15);
-            this.LoadPort_Box.Controls.Add(this.label16);
-            this.LoadPort_Box.Controls.Add(this.label17);
+            this.LoadPort_Box.Controls.Add(this.label30);
+            this.LoadPort_Box.Controls.Add(this.label27);
+            this.LoadPort_Box.Controls.Add(this.label26);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_16);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_17);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_18);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_19);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_20);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_21);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_22);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_23);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_24);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_25);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_11);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_12);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_13);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_14);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_15);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_6);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_7);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_8);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_9);
+            this.LoadPort_Box.Controls.Add(this.lb_wafer_10);
             this.LoadPort_Box.Controls.Add(this.lb_wafer_1);
             this.LoadPort_Box.Controls.Add(this.lb_wafer_2);
             this.LoadPort_Box.Controls.Add(this.lb_wafer_3);
@@ -108,7 +124,7 @@ namespace LoadPort
             this.LoadPort_Box.Controls.Add(this.label_errorcode);
             this.LoadPort_Box.Controls.Add(this.label11);
             this.LoadPort_Box.Controls.Add(this.label_door);
-            this.LoadPort_Box.Controls.Add(this.label9);
+            this.LoadPort_Box.Controls.Add(this.label_docking);
             this.LoadPort_Box.Controls.Add(this.label_clamp);
             this.LoadPort_Box.Controls.Add(this.label_foup);
             this.LoadPort_Box.Controls.Add(this.label_moving);
@@ -135,163 +151,232 @@ namespace LoadPort
             // 
             // label3
             // 
-            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label3.Location = new System.Drawing.Point(217, 223);
+            this.label3.Location = new System.Drawing.Point(212, 69);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 8);
-            this.label3.TabIndex = 68;
-            // 
-            // label4
-            // 
-            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label4.Location = new System.Drawing.Point(217, 212);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 8);
-            this.label4.TabIndex = 67;
-            // 
-            // label5
-            // 
-            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label5.Location = new System.Drawing.Point(217, 201);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 8);
-            this.label5.TabIndex = 66;
-            // 
-            // label6
-            // 
-            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label6.Location = new System.Drawing.Point(217, 190);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 8);
-            this.label6.TabIndex = 65;
-            // 
-            // label23
-            // 
-            this.label23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label23.Location = new System.Drawing.Point(217, 179);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(70, 8);
-            this.label23.TabIndex = 64;
-            // 
-            // label28
-            // 
-            this.label28.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label28.Location = new System.Drawing.Point(217, 154);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(70, 8);
-            this.label28.TabIndex = 61;
+            this.label3.Size = new System.Drawing.Size(81, 25);
+            this.label3.TabIndex = 75;
+            this.label3.Text = "Mapping";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label29
             // 
-            this.label29.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label29.Location = new System.Drawing.Point(217, 143);
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.Location = new System.Drawing.Point(290, 236);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(70, 8);
-            this.label29.TabIndex = 60;
+            this.label29.Size = new System.Drawing.Size(19, 13);
+            this.label29.TabIndex = 74;
+            this.label29.Text = "15";
             // 
-            // label30
+            // label28
             // 
-            this.label30.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label30.Location = new System.Drawing.Point(217, 132);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(70, 8);
-            this.label30.TabIndex = 59;
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(290, 307);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(19, 13);
+            this.label28.TabIndex = 73;
+            this.label28.Text = "10";
             // 
             // label31
             // 
-            this.label31.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label31.Location = new System.Drawing.Point(217, 121);
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(290, 91);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(70, 8);
-            this.label31.TabIndex = 58;
+            this.label31.Size = new System.Drawing.Size(19, 13);
+            this.label31.TabIndex = 72;
+            this.label31.Text = "25";
             // 
-            // label32
+            // label30
             // 
-            this.label32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label32.Location = new System.Drawing.Point(217, 110);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(70, 8);
-            this.label32.TabIndex = 57;
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(290, 158);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(19, 13);
+            this.label30.TabIndex = 71;
+            this.label30.Text = "20";
             // 
-            // label18
+            // label27
             // 
-            this.label18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label18.Location = new System.Drawing.Point(217, 297);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(70, 8);
-            this.label18.TabIndex = 51;
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(293, 381);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(13, 13);
+            this.label27.TabIndex = 70;
+            this.label27.Text = "5";
             // 
-            // label19
+            // label26
             // 
-            this.label19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label19.Location = new System.Drawing.Point(217, 286);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(70, 8);
-            this.label19.TabIndex = 50;
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(293, 437);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(13, 13);
+            this.label26.TabIndex = 69;
+            this.label26.Text = "1";
             // 
-            // label20
+            // lb_wafer_16
             // 
-            this.label20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label20.Location = new System.Drawing.Point(217, 275);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(70, 8);
-            this.label20.TabIndex = 49;
+            this.lb_wafer_16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_16.Location = new System.Drawing.Point(217, 223);
+            this.lb_wafer_16.Name = "lb_wafer_16";
+            this.lb_wafer_16.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_16.TabIndex = 68;
             // 
-            // label21
+            // lb_wafer_17
             // 
-            this.label21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label21.Location = new System.Drawing.Point(217, 264);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(70, 8);
-            this.label21.TabIndex = 48;
+            this.lb_wafer_17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_17.Location = new System.Drawing.Point(217, 212);
+            this.lb_wafer_17.Name = "lb_wafer_17";
+            this.lb_wafer_17.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_17.TabIndex = 67;
             // 
-            // label22
+            // lb_wafer_18
             // 
-            this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label22.Location = new System.Drawing.Point(217, 253);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(70, 8);
-            this.label22.TabIndex = 47;
+            this.lb_wafer_18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_18.Location = new System.Drawing.Point(217, 201);
+            this.lb_wafer_18.Name = "lb_wafer_18";
+            this.lb_wafer_18.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_18.TabIndex = 66;
             // 
-            // label13
+            // lb_wafer_19
             // 
-            this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label13.Location = new System.Drawing.Point(217, 370);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(70, 8);
-            this.label13.TabIndex = 46;
+            this.lb_wafer_19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_19.Location = new System.Drawing.Point(217, 190);
+            this.lb_wafer_19.Name = "lb_wafer_19";
+            this.lb_wafer_19.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_19.TabIndex = 65;
             // 
-            // label14
+            // lb_wafer_20
             // 
-            this.label14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label14.Location = new System.Drawing.Point(217, 359);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(70, 8);
-            this.label14.TabIndex = 45;
+            this.lb_wafer_20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_20.Location = new System.Drawing.Point(217, 179);
+            this.lb_wafer_20.Name = "lb_wafer_20";
+            this.lb_wafer_20.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_20.TabIndex = 64;
             // 
-            // label15
+            // lb_wafer_21
             // 
-            this.label15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label15.Location = new System.Drawing.Point(217, 348);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(70, 8);
-            this.label15.TabIndex = 44;
+            this.lb_wafer_21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_21.Location = new System.Drawing.Point(217, 154);
+            this.lb_wafer_21.Name = "lb_wafer_21";
+            this.lb_wafer_21.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_21.TabIndex = 61;
             // 
-            // label16
+            // lb_wafer_22
             // 
-            this.label16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label16.Location = new System.Drawing.Point(217, 337);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(70, 8);
-            this.label16.TabIndex = 43;
+            this.lb_wafer_22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_22.Location = new System.Drawing.Point(217, 143);
+            this.lb_wafer_22.Name = "lb_wafer_22";
+            this.lb_wafer_22.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_22.TabIndex = 60;
             // 
-            // label17
+            // lb_wafer_23
             // 
-            this.label17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label17.Location = new System.Drawing.Point(217, 326);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(70, 8);
-            this.label17.TabIndex = 42;
+            this.lb_wafer_23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_23.Location = new System.Drawing.Point(217, 132);
+            this.lb_wafer_23.Name = "lb_wafer_23";
+            this.lb_wafer_23.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_23.TabIndex = 59;
+            // 
+            // lb_wafer_24
+            // 
+            this.lb_wafer_24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_24.Location = new System.Drawing.Point(217, 121);
+            this.lb_wafer_24.Name = "lb_wafer_24";
+            this.lb_wafer_24.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_24.TabIndex = 58;
+            // 
+            // lb_wafer_25
+            // 
+            this.lb_wafer_25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_25.Location = new System.Drawing.Point(217, 110);
+            this.lb_wafer_25.Name = "lb_wafer_25";
+            this.lb_wafer_25.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_25.TabIndex = 57;
+            // 
+            // lb_wafer_11
+            // 
+            this.lb_wafer_11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_11.Location = new System.Drawing.Point(217, 297);
+            this.lb_wafer_11.Name = "lb_wafer_11";
+            this.lb_wafer_11.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_11.TabIndex = 51;
+            // 
+            // lb_wafer_12
+            // 
+            this.lb_wafer_12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_12.Location = new System.Drawing.Point(217, 286);
+            this.lb_wafer_12.Name = "lb_wafer_12";
+            this.lb_wafer_12.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_12.TabIndex = 50;
+            // 
+            // lb_wafer_13
+            // 
+            this.lb_wafer_13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_13.Location = new System.Drawing.Point(217, 275);
+            this.lb_wafer_13.Name = "lb_wafer_13";
+            this.lb_wafer_13.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_13.TabIndex = 49;
+            // 
+            // lb_wafer_14
+            // 
+            this.lb_wafer_14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_14.Location = new System.Drawing.Point(217, 264);
+            this.lb_wafer_14.Name = "lb_wafer_14";
+            this.lb_wafer_14.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_14.TabIndex = 48;
+            // 
+            // lb_wafer_15
+            // 
+            this.lb_wafer_15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_15.Location = new System.Drawing.Point(217, 253);
+            this.lb_wafer_15.Name = "lb_wafer_15";
+            this.lb_wafer_15.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_15.TabIndex = 47;
+            // 
+            // lb_wafer_6
+            // 
+            this.lb_wafer_6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_6.Location = new System.Drawing.Point(217, 370);
+            this.lb_wafer_6.Name = "lb_wafer_6";
+            this.lb_wafer_6.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_6.TabIndex = 46;
+            // 
+            // lb_wafer_7
+            // 
+            this.lb_wafer_7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_7.Location = new System.Drawing.Point(217, 359);
+            this.lb_wafer_7.Name = "lb_wafer_7";
+            this.lb_wafer_7.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_7.TabIndex = 45;
+            // 
+            // lb_wafer_8
+            // 
+            this.lb_wafer_8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_8.Location = new System.Drawing.Point(217, 348);
+            this.lb_wafer_8.Name = "lb_wafer_8";
+            this.lb_wafer_8.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_8.TabIndex = 44;
+            // 
+            // lb_wafer_9
+            // 
+            this.lb_wafer_9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_9.Location = new System.Drawing.Point(217, 337);
+            this.lb_wafer_9.Name = "lb_wafer_9";
+            this.lb_wafer_9.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_9.TabIndex = 43;
+            // 
+            // lb_wafer_10
+            // 
+            this.lb_wafer_10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_wafer_10.Location = new System.Drawing.Point(217, 326);
+            this.lb_wafer_10.Name = "lb_wafer_10";
+            this.lb_wafer_10.Size = new System.Drawing.Size(70, 8);
+            this.lb_wafer_10.TabIndex = 42;
             // 
             // lb_wafer_1
             // 
@@ -366,16 +451,16 @@ namespace LoadPort
             this.label_door.Text = "Door";
             this.label_door.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label9
+            // label_docking
             // 
-            this.label9.BackColor = System.Drawing.Color.White;
-            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label9.Location = new System.Drawing.Point(106, 272);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(80, 19);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "Docking";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label_docking.BackColor = System.Drawing.Color.White;
+            this.label_docking.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_docking.Location = new System.Drawing.Point(106, 272);
+            this.label_docking.Name = "label_docking";
+            this.label_docking.Size = new System.Drawing.Size(80, 19);
+            this.label_docking.TabIndex = 15;
+            this.label_docking.Text = "Docking";
+            this.label_docking.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_clamp
             // 
@@ -454,7 +539,7 @@ namespace LoadPort
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(105, 69);
+            this.label2.Location = new System.Drawing.Point(106, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(81, 25);
             this.label2.TabIndex = 8;
@@ -531,47 +616,54 @@ namespace LoadPort
             // 
             // listBox1
             // 
+            this.listBox1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(331, 6);
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(341, 6);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(314, 460);
+            this.listBox1.Size = new System.Drawing.Size(343, 452);
             this.listBox1.TabIndex = 1;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(651, 469);
+            this.ClientSize = new System.Drawing.Size(696, 469);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.LoadPort_Box);
             this.MaximizeBox = false;
             this.Name = "Main";
             this.Text = "Main";
+            this.Load += new System.EventHandler(this.Main_Load);
             this.LoadPort_Box.ResumeLayout(false);
+            this.LoadPort_Box.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.GroupBox LoadPort_Box;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label lb_wafer_1;
+        private System.Windows.Forms.Label lb_wafer_21;
+        private System.Windows.Forms.Label lb_wafer_22;
+        private System.Windows.Forms.Label lb_wafer_23;
+        private System.Windows.Forms.Label lb_wafer_24;
+        private System.Windows.Forms.Label lb_wafer_25;
+        private System.Windows.Forms.Label lb_wafer_11;
+        private System.Windows.Forms.Label lb_wafer_12;
+        private System.Windows.Forms.Label lb_wafer_13;
+        private System.Windows.Forms.Label lb_wafer_14;
+        private System.Windows.Forms.Label lb_wafer_15;
+        private System.Windows.Forms.Label lb_wafer_6;
+        private System.Windows.Forms.Label lb_wafer_7;
+        private System.Windows.Forms.Label lb_wafer_8;
+        private System.Windows.Forms.Label lb_wafer_9;
+        private System.Windows.Forms.Label lb_wafer_10;
         private System.Windows.Forms.Label lb_wafer_2;
         private System.Windows.Forms.Label lb_wafer_3;
         private System.Windows.Forms.Label lb_wafer_4;
@@ -579,7 +671,7 @@ namespace LoadPort
         private System.Windows.Forms.Label label_errorcode;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label_door;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label_docking;
         private System.Windows.Forms.Label label_clamp;
         private System.Windows.Forms.Label label_foup;
         private System.Windows.Forms.Label label_moving;
@@ -596,11 +688,20 @@ namespace LoadPort
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btn_init;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label lb_wafer_16;
+        private System.Windows.Forms.Label lb_wafer_17;
+        private System.Windows.Forms.Label lb_wafer_18;
+        private System.Windows.Forms.Label lb_wafer_19;
+        private System.Windows.Forms.Label lb_wafer_20;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label26;
+        public System.Windows.Forms.Label lb_wafer_1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

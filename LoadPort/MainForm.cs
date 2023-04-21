@@ -14,14 +14,28 @@ namespace LoadPort
     {
         StreamReader Reading;
         StreamWriter Writing;
-        string WriteCommand = "";
+        TcpListener tcpListener1;
+        TcpClient tcpClient1;
+        NetworkStream stream;
         bool tcpconnect = false;
         byte[] buffer = new byte[1024];
-
         int[] Gpi_Array = new int[64];
         int[] Gpo_Array = new int[64];
+        string ErrorCode = "";
+        string sSTAT = "00000";
         string Gpi_bin = "";
         string Gpo_bin = "";
+        string Ypos; // Y축 
+        string Zpos; // Z축 
+        string Wdata = "0000000000000000000000000";
+        public Label[] lb_Wafer;
+
+
+        const int OPERATION_MODE = 0;
+        const int ORIGIN_COMPLETE = 1;
+        const int COMMAND_PROCESSING = 2;
+        const int OPERATION_MOVING = 3;
+        const int MOTION_SPEED = 4;
         #region LoadPort GPI
         public const int GIN_PREPARATION_COMPLETED = 0;
         public const int GIN_TEMPORARILY_STOP = 1;
@@ -41,7 +55,6 @@ namespace LoadPort
         public const int LOWER_PRESSURE_LIMIT = 15;
         public const int GIN_CARRIER_CLAMP_OPEN = 16;
         public const int GIN_CARRIER_CLAMP_CLOSE = 17;
-        Boolean GIN_carrier_clamp_close;
         public const int PRESENCE_LEFT = 18;
         public const int PRESENCE_RIGHT = 19;
         public const int PRESENCE_MIDDLE = 20;
@@ -133,164 +146,67 @@ namespace LoadPort
         public const int READY = 59;
         public const int HO_AVBL = 62;
         public const int ES = 63;
-
-        Boolean preparation_completed;
-        Boolean temporarily_stop;
-        Boolean significant_error;
-        Boolean light_error;
-        Boolean siganl_not_connected;
-        Boolean adapter_clamp;
-        Boolean adapter_power;
-        Boolean obstacle_detection_cancel;
-        Boolean carrier_clamp_close;
-        Boolean carrier_clamp_open;
-        Boolean foup_door_lock_open;
-        Boolean foup_door_lock_close;
-        Boolean mapping_sensor_prepation;
-        Boolean mapping_sensor_containning;
-        Boolean chucking_on;
-        Boolean chucking_off;
-        Boolean cover_lock;
-        Boolean cover_unlock;
-        Boolean door_open;
-        Boolean carrier_clamp;
-        Boolean carrier_detecting_sensor_on;
-        Boolean preparation_completed_external_output;
-        Boolean carrying_properly_load;
-        Boolean stage_rotation_back;
-        Boolean stage_rotation_front;
-        Boolean bcr_lifting;
-        Boolean bcr_lowering;
-        Boolean carrier_retainer_lowering;
-        Boolean carrier_retainer_lifting;
-        Boolean external_sw1led_load;
-        Boolean external_sw3led_unload;
-        Boolean load_led;
-        Boolean unload_led;
-        Boolean presence_led;
-        Boolean placement_led;
-        Boolean manual_led;
-        Boolean error_led;
-        Boolean clamp_led;
-        Boolean dock_led;
-        Boolean busy_led;
-        Boolean auto_led;
-        Boolean reserved_led;
-        Boolean closed_led;
-        Boolean lock_led;
-        Boolean load_request;
-        Boolean unload_request;
-        Boolean ready;
-        Boolean ho_avbl;
-        Boolean es;
         #endregion
         public Main()
         {
             InitializeComponent();
-            Thread thread1 = new Thread(TCPConnect);
-            thread1.IsBackground = true;
-            thread1.Start();
         }
-        public void Send(string Command)
+        public void Send(string command)
         {
-            if (Command == "INIT")
+            Writing.Write("oSTG1." + command + '\r');
+            Writing.Flush();
+            this.Invoke(new Action(delegate ()
             {
-                Writing.WriteLine("oSTG1.INIT" + "\r");
-            }
-            else if (Command == "ORGN")
-            {
-                Writing.WriteLine("oSTG1.ORGN" + "\r");
-            }
-            else if (Command == "RSTA")
-            {
-                Writing.WriteLine("oSTG1.RSTA" + "\r");
-            }
-            else if (Command == "CLMP")
-            {
-                Writing.WriteLine("oSTG1.CLMP" + "\r");
-            }
-            else if (Command == "UCLM")
-            {
-                Writing.WriteLine("oSTG1.UCLM" + "\r");
-            }
-        }
-
-        public void CheckGPIO()
-        {
-            if (Gpo_bin[PREPARATION_COMPLETED] == 1)
-            {
-                preparation_completed = true;
-            }
-            else
-            {
-                preparation_completed = false;
-            }
-            if (Gpo_bin[TEMPORARILY_STOP] == 1)
-            {
-                temporarily_stop = true;
-            }
-            else
-            {
-                preparation_completed = false;
-            }
-            if (Gpo_bin[SIGNIFICANT_ERROR] == 1)
-            {
-                significant_error = true;
-            }
-            else
-            {
-                preparation_completed = false;
-            }
-            if (Gpo_bin[LIGHT_ERROR] == 1)
-            {
-                light_error = true;
-            }
-            else
-            {
-                light_error = false;
-            }
-            if (Gpo_bin[DOOR_OPEN] == 1)
-            {
-                door_open = true;
-            }
-            else
-            {
-                door_open = false;
-            }
-
+                listBox1.Items.Add("oSTG1." + command + '\r');
+            }));
         }
         private void btn_Command_Click(object sender, EventArgs e)
-        {
+       {
             if (tcpconnect)
             {
+                if (sSTAT[OPERATION_MOVING].ToString() == "1")
+                {
+                    MessageBox.Show("LoadPort가 동작 중 입니다.");
+                    return;
+                }
                 Button command_button = (Button)sender;
                 string command = command_button.Text;
                 switch (command)
                 {
                     case "INIT":
-                        WriteCommand = "oSTG1.INIT" + '\r';
-                        Writing.WriteLine(WriteCommand); // 명령 Write
-                        listBox1.Items.Add(WriteCommand); // listbox에 명령 출력
+                        if (sSTAT[OPERATION_MODE].ToString() == "0")
+                        {
+                            MessageBox.Show(" INITIAL 중 입니다.");
+                            return;
+                        }
+                        Send("INIT");
                         break;
                     case "ORIGIN":
-                        WriteCommand = "oSTG1.ORGN" + "\r";
-                        Writing.WriteLine(WriteCommand);
-                        listBox1.Items.Add(WriteCommand);
+                        Send("ORGN");
                         break;
                     case "RSTA":
-                        WriteCommand = "oSTG1.RSTA(1)" + "\r";
-                        Writing.WriteLine(WriteCommand);
-                        listBox1.Items.Add(WriteCommand);
+                        if (sSTAT[OPERATION_MOVING].ToString() == "1")
+                        {
+                            MessageBox.Show("RESET 중 입니다.");
+                            return;
+                        }
+                        Send("RSTA(0)");
                         break;
                     case "CLAMP":
-                        WriteCommand = "oSTG1.CLMP" + "\r";
-                        Writing.WriteLine(WriteCommand);
-                        listBox1.Items.Add(WriteCommand);
+                        if (Ypos == "02" || Ypos == "03")
+                        {
+                            MessageBox.Show("LOADPORT가 이미 Dokcking 중 입니다.");
+                            return;
+                        }
+                        Send("CLMP");
                         break;
                     case "UNCLAMP":
-                        WriteCommand = "oSTG1.UCLM" + "\r";
-                        Writing.WriteLine(WriteCommand);
-                        listBox1.Items.Add(WriteCommand);
+                        if (Ypos == "01" || Ypos == "04")
+                        {
+                            MessageBox.Show("LOADPORT가 이미 UnDokcking 중 입니다.");
+                            return;
+                        }
+                        Send("UCLM");
                         break;
                 }
             }
@@ -301,57 +217,78 @@ namespace LoadPort
             //TcpClient Client = new TcpClient();
             //IPEndPoint Point = new IPEndPoint(IPAddress.Parse("127.0.0.1"), int.Parse("11000") /*+  (iPortNo * 1000)*/);  // Client
 
-            TcpListener tcpListener1 = new TcpListener(IPAddress.Parse("127.0.0.1"), int.Parse("11000"));   // Server
+            tcpListener1 = new TcpListener(IPAddress.Parse("127.0.0.1"), int.Parse("11000"));   // Server
             tcpListener1.Start();
-            TcpClient tcpClient1 = tcpListener1.AcceptTcpClient();
-            NetworkStream stream = tcpClient1.GetStream();
-            tcpconnect = true;
+            tcpClient1 = tcpListener1.AcceptTcpClient();
+            stream = tcpClient1.GetStream();
             Writing = new StreamWriter(tcpClient1.GetStream());
             Reading = new StreamReader(tcpClient1.GetStream());
-
-            int n;
             Writing.AutoFlush = true;
+            int n;
 
-            if (tcpClient1.Connected)
+            while (true)
             {
-
-                while ((n = stream.Read(buffer, 0, buffer.Length)) > 0)
+                try
                 {
-                    label_connect.BackColor = Color.LightGreen;
-                    stream.Write(buffer, 0, n);
-                    string data = null;
-                    data = Encoding.Default.GetString(buffer, 0, n);
-                    string ReceiveData = data;
-                    if (ReceiveData != null)
+                    if (tcpClient1.Connected)
                     {
-                        if (ReceiveData.Substring(0, 10) == "eSTG1.CNCT")
+                        tcpconnect = true;
+                        while ((n = stream.Read(buffer, 0, buffer.Length)) > 0)
                         {
-                            Writing.WriteLine("oSTG1.EVNT(0,1)" + '\r');
-                        }
+                            //stream.Write(buffer, 0, n);
+                            string data = null;
+                            data = Encoding.UTF8.GetString(buffer, 0, n);
+                            string ReceiveData = data;
 
-
-                        //    this.Invoke(new Action(delegate ()
-                        //{
-                        //    listBox1.Items.Add(ReceiveData);
-                        //}));
-
-                        string[] lines = ReceiveData.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                        foreach (string strmsg in lines)
-                        {
-                            this.Invoke(new Action(delegate ()
+                            if (ReceiveData.Contains("CNCT"))
                             {
-
-                                listBox1.Items.Add(strmsg);
-                                ProcessData(strmsg);
-                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                                listBox1.SelectedIndex = -1;    // 리스트박스 자동스크롤
-                                if (listBox1.Items.Count == 100) // 리스트 박스 100개 초과시, FIFO
+                                this.Invoke(new Action(delegate ()
                                 {
-                                    listBox1.Items.RemoveAt(listBox1.SelectedIndex + 1);
+
+                                    listBox1.Items.Add(ReceiveData);
+                                }));
+                                Send("EVNT(0,1)");
+                            }
+
+                            else
+                            {
+                                string[] lines = ReceiveData.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                                foreach (string strmsg in lines)
+                                {
+                                    this.Invoke(new Action(delegate ()
+                                    {
+
+                                        listBox1.Items.Add(strmsg);
+                                        ProcessData(strmsg);
+                                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                                        listBox1.SelectedIndex = -1;
+                                        if (listBox1.Items.Count == 100)
+                                        {
+                                            listBox1.Items.RemoveAt(listBox1.SelectedIndex + 1);
+                                        }
+                                    }));
+                        
                                 }
-                            }));
+                            }
                         }
                     }
+                }
+
+                catch (Exception e)
+                {
+                    MessageBox.Show("LoadPort와 연결이 끊어졌습니다.");
+                    this.Invoke(new Action(delegate ()
+                    {
+                        listBox1.Items.Add("연결 대기중...");
+                    }));
+                    tcpconnect = false;
+                }
+                finally
+                {
+                    tcpClient1.Close();
+                    tcpListener1.Stop();
+                    TCPConnect();
+
                 }
             }
         }
@@ -359,10 +296,7 @@ namespace LoadPort
         private void ProcessData(string sData) // Receive Data Split 
         {
             string HED;
-            string ID;
             string DATA;
-            string sSTAT = "";
-            string ErrorCode = "";
             string Gpi = "";
             string Gpo = "";
 
@@ -381,129 +315,214 @@ namespace LoadPort
                     {
                         sSTAT = sData.Substring(sData.IndexOf(':') + 1, 5);
                         ErrorCode = sData.Substring(sData.IndexOf('/') + 1, 4);
-
-                        if (ErrorCode == "0000")
-                        {
-                            label_errorcode.BackColor = Color.White;
-                            label_errorcode.Text = "Error CODE";
-                        }
-                        else      // Error Code
-                        {
-                            label_errorcode.BackColor = Color.LightGreen;
-                            label_errorcode.Text = "Error CODE" + '\r' + ErrorCode;
-                        }
-
-                        for (int i = 0; i < 5; i++)
-                        {
-                            switch (i)
-                            {
-                                case 0:
-                                    int ConvertsSTAT = Convert.ToInt32(sSTAT[i] + "");
-                                    if (ConvertsSTAT == 1)
-                                    {
-                                        label_init.Text = "Initial";
-                                        label_init.BackColor = Color.LightGreen;
-                                        //작동모드 원격
-                                    }
-                                    else
-                                    {
-                                        label_init.BackColor = Color.White;
-                                    }
-                                    break;
-                                case 1:
-                                    ConvertsSTAT = Convert.ToInt32(sSTAT[i] + "");
-                                    if (ConvertsSTAT == 0)
-                                    {
-                                        label_origin.BackColor = Color.White;
-                                        //원점복귀 미완료
-                                    }
-                                    else if (ConvertsSTAT == 1)
-                                    {
-                                        label_origin.BackColor = Color.LightGreen;
-                                        //원점복귀 완료
-                                    }
-                                    break;
-                                case 2:
-                                    ConvertsSTAT = Convert.ToInt32(sSTAT[i] + "");
-                                    if (ConvertsSTAT == 0)
-                                    {
-                                        //명령처리 정지
-                                    }
-                                    else if (ConvertsSTAT == 1)
-                                    {
-                                        //명령처리 처리
-                                    }
-                                    break;
-                                case 3:
-                                    ConvertsSTAT = Convert.ToInt32(sSTAT[i] + "");
-                                    if (ConvertsSTAT == 0)
-                                    {
-                                        label_moving.BackColor = Color.White;
-                                        //LD포트동작 상태 정지
-                                    }
-                                    else if (ConvertsSTAT == 1)
-                                    {
-                                        label_moving.Text = "MOVING";
-                                        label_moving.BackColor = Color.LightGreen;
-                                        //LD포트동작 상태 이동
-                                    }
-                                    else if (ConvertsSTAT == 2)
-                                    {
-                                        label_moving.BackColor = Color.White;
-                                        //LD포트동작 상태 일시정지
-                                    }
-                                    break;
-                                case 4:
-                                    ConvertsSTAT = Convert.ToInt32(sSTAT[i] + "");
-                                    if (ConvertsSTAT == 0)
-                                    {
-                                        //LD포트동작속도 보통
-                                    }
-                                    else
-                                    {
-                                        // 유지보수
-                                    }
-                                    break;
-                            }
-                        }
-
                     }
 
                     if (DATA == "GPIO")
                     {
-                        Gpi = sData.Substring(sData.IndexOf(':') + 1, 16);  // 16진수를 2진수로 변환
-                        Gpi_bin = Convert.ToString(Convert.ToInt64(Gpi, 16), 2);
-                        if (Gpi_bin.Length < 63)
+                        Gpi = sData.Substring(sData.IndexOf(':') + 1, 16);  // GP INPUT
+                        Gpi_bin = Convert.ToString(Convert.ToInt64(Gpi, 16), 2); // 16진수를 2진수로 변환
+                        if (Gpi_bin.Length < 63)                                // 부족한 BIT 수를 추가 [64]
                         {
                             for (int i = 0; Gpi_bin.Length < 64; i++)
                             {
                                 Gpi_bin = Gpi_bin.Insert(0, "0");
                             }
                         }
-                        for (int i = 0; i < 64; i++)
+                        for (int i = 0; i < 64; i++)                        // Gpi 배열에 Gpi binary 값을 역순으로 대입
                         {
                             Gpi_Array[63 - i] = int.Parse(Gpi_bin[i].ToString());
                         }
 
-                        if(Gpi_Array[17] == 1)
+                        Gpo = sData.Substring(sData.IndexOf('/') + 1, 16); // GP OUTPUT
+                        Gpo_bin = Convert.ToString(Convert.ToInt64(Gpo, 16), 2);  // 16진수를 2진수 변환
+                        if (Gpo_bin.Length < 63)
                         {
-                            label_clamp.BackColor = Color.LightGreen;
+                            for (int i = 0; Gpo_bin.Length < 64; i++)
+                            {
+                                Gpo_bin = Gpo_bin.Insert(0, "0");
+                            }
                         }
-                        if(Gpi_Array[18]+ Gpi_Array[19]+ Gpi_Array[20] + Gpi_Array[25] == 4)
+                        for (int i = 0; i < 64; i++)
                         {
-                            label_foup.BackColor = Color.LightGreen;
+                            Gpo_Array[63 - i] = int.Parse(Gpo_bin[i].ToString());
                         }
-                        //Gpo = sData.Substring(sData.IndexOf('/') + 1, 16);
-                        //Gpo_bin = Convert.ToString(Convert.ToInt32(Gpo, 16), 2);
-                        //CheckGPIO();
-                        //if (door_open)
-                        //{
-                        //    label_door.BackColor = Color.LightGreen;
-                        //}
                     }
 
+                    if (DATA == "GPOS")
+                    {
+                        Ypos = sData.Substring(sData.IndexOf(':') + 1, 2); // Y축 
+                        Zpos = sData.Substring(sData.IndexOf('/') + 1, 2); // Z축 
+
+                        if (Ypos == "02" && Zpos == "02")
+                        {
+                            Writing.WriteLine("oSTG1.GMAP" + "\r"); // DOOR OPEN 시, GMAP 수행 [MAPPING READ]
+                            listBox1.Items.Add("oSTG1.GMAP" + "\r");
+                        }
+
+                    }
+
+                    if (DATA == "GMAP")
+                    {
+                        Wdata = sData.Substring(sData.IndexOf(':') + 1, 25);
+                    }
                     break;
             }
+        }
+
+        private void DisplayFunction()
+        {
+            if (tcpconnect)
+            {
+                label_connect.BackColor = Color.SpringGreen;
+            }
+            else
+            {
+                label_connect.BackColor = SystemColors.Control;
+            }
+
+            if (ErrorCode == "0000")
+            {
+                label_errorcode.BackColor = Color.White;
+                label_errorcode.Text = "Error CODE" + '\r' + ErrorCode;
+            }
+            else      // Error Code
+            {
+                label_errorcode.BackColor = Color.LightGreen;
+                label_errorcode.Text = "Error CODE" + '\r' + ErrorCode;
+            }
+
+
+            if (sSTAT[0].ToString() == "1")
+            {
+                label_init.Text = "Initial";
+                label_init.BackColor = Color.LightGreen;
+
+                //작동모드 원격
+            }
+            else
+            {
+                label_init.BackColor = Color.White;
+            }
+            if (sSTAT[1].ToString() == "1")
+            {
+                label_origin.BackColor = Color.LightGreen;
+                //원점복귀 미완료
+            }
+            else
+            {
+                label_origin.BackColor = Color.White;
+                //원점복귀 미완료
+            }
+
+            if (sSTAT[2].ToString() == "1")
+            {
+                //명령처리 처리
+            }
+            else
+            {
+                //명령처리 정지
+            }
+
+
+            if (sSTAT[3].ToString() == "0")
+            {
+                label_moving.BackColor = Color.White;
+                //LD포트동작 상태 정지
+            }
+            else if (sSTAT[3].ToString() == "1")
+            {
+                label_moving.Text = "MOVING";
+                label_moving.BackColor = Color.LightGreen;
+                //LD포트동작 상태 이동
+            }
+            else if (sSTAT[3].ToString() == "2")
+            {
+                label_moving.BackColor = Color.White;
+                //LD포트동작 상태 일시정지
+            }
+
+            if (sSTAT[4].ToString() == "0")
+            {
+                //LD포트동작속도 보통
+            }
+            else
+            {
+                // 유지보수
+            }
+
+            if (Gpi_Array[GIN_CARRIER_CLAMP_CLOSE] == 1)  // CLAMP 조건
+            {
+                label_clamp.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                label_clamp.BackColor = Color.White;
+            }
+            if (Gpi_Array[CHUCKING_ON] + Gpi_Array[PRESENCE_RIGHT] + Gpi_Array[PRESENCE_MIDDLE] + Gpi_Array[PRESENCE] == 4) // FOUP 조건
+            {
+                label_foup.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                label_foup.BackColor = Color.White;
+            }
+
+            if (Ypos == "02" || Ypos == "03")   // Docking 조건 (GPOS의 Y축 Pos값이 2 또는 3)
+            {
+                label_docking.BackColor = Color.LightGreen;
+            }
+
+            else
+            {
+                label_docking.BackColor = Color.White;
+            }
+
+            // Door(문열림) 조건 => Docking 완료시 ON, 원점검색 또는 Undocking시 OFF
+
+            if (Ypos == "02" && Zpos == "02")
+            {
+                label_door.BackColor = Color.LightGreen;
+                for (int i = 1; i <= 25; i++)
+                {
+                    if (Wdata[i - 1].ToString() == "1")
+                    {
+
+                        lb_Wafer[i - 1].BackColor = Color.SpringGreen;
+                    }
+
+                    else
+                    {
+                        lb_Wafer[i - 1].BackColor = SystemColors.Control;
+                    }
+                }
+            }
+
+            else
+            {
+                label_door.BackColor = Color.White;
+                for (int i = 1; i <= 25; i++)
+                {
+                        lb_Wafer[i - 1].BackColor = SystemColors.Control;
+                }
+            }
+
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            Thread thread1 = new Thread(TCPConnect);
+            thread1.IsBackground = true;
+            thread1.Start();
+
+            lb_Wafer = new Label[] {lb_wafer_1, lb_wafer_2, lb_wafer_3, lb_wafer_4, lb_wafer_5, lb_wafer_6,
+                                    lb_wafer_7, lb_wafer_8, lb_wafer_9, lb_wafer_10, lb_wafer_11, lb_wafer_12, lb_wafer_13,
+                                    lb_wafer_14, lb_wafer_15, lb_wafer_16, lb_wafer_17, lb_wafer_18, lb_wafer_19, lb_wafer_20,
+                                    lb_wafer_21, lb_wafer_22, lb_wafer_23, lb_wafer_24, lb_wafer_25};
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            DisplayFunction();
         }
     }
 }
